@@ -25,9 +25,9 @@ def remove_commas(s):
 def process_statement(infile, outfile):
 
     escape_char = re.compile(u'\x96', re.MULTILINE)
-    transaction_regex = re.compile(r'^\s+(\d{2}\/\d{2})\s+(\d{2}\/\d{2})\s+(.*\w)\s+(\d{4})\s+(\d{4})\s+((?:-\s)?[\d\.,]+)\s*([\d\.,]*\s\w{3})?$', re.MULTILINE)
+    transaction_regex = re.compile(r'^\s*(\d{2}\/\d{2})\s+(\d{2}\/\d{2})\s+(.*\w)\s+(\d{4})\s+(\d{4})\s+((?:-\s)?[\d\.,]+)\n?\s*((?:-\s)?[\d\.,]*\s\w{3})?$', re.MULTILINE)
 
-    with open(infile) as f:
+    with open(infile, 'rU') as f:
         with open(outfile, 'wb') as csvfile:
             twriter = csv.writer(csvfile, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
 
@@ -38,7 +38,6 @@ def process_statement(infile, outfile):
 
             transactions = re.findall(transaction_regex, content)
             for transaction in transactions:
-
                 transaction_date = fix_date(transaction[0])
                 posting_date = fix_date(transaction[1])
                 description = reduce_whitespace(transaction[2])
