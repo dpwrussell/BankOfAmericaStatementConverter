@@ -10,5 +10,18 @@ Note that it also converts dates to DD/MM.
 
 ## Usage:
 ```
-./boa-convert.py statement.txt statement.csv
+./boa-convert.py [-h] [--account] [--payments] infile outfile
+```
+
+```
+Convert Bank of America statement .txt to .csv
+
+positional arguments:
+  infile      The .txt statement file
+  outfile     The .csv output file
+
+optional arguments:
+  -h, --help  show this help message and exit
+  --account   Include account number in output
+  --payments  Include payments in output
 ```
